@@ -116,10 +116,6 @@ function Game() {
 
   function killYourselfHandler() {
     setPlayerHealth(0);
-    setBattleLog((prev) => [
-      { isPlayer: true, isDamage: true, text: " gave up!" },
-      ...prev,
-    ]);
     checkWinner(0, monsterHealth);
   }
 
