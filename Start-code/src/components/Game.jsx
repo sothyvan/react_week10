@@ -37,11 +37,11 @@ function Game() {
   const [playerHealth, setPlayerHealth] = useState(100);
   const [monsterHealth, setMonsterHealth] = useState(100);
   const [battleLog, setBattleLog] = useState([]);
-  const [round, setRound] = useState(1);
+  const [round, setRound] = useState(0);
   const [winner, setWinner] = useState(null);
 
   const isGameOver = winner !== null;
-  const canSpecialAttack = round % 3 === 0;
+  const canSpecialAttack = round === 3;
   // ----------------------------------------------------------------------------------------------------------
   // BUTTONS EVENT FUNCTIONS
   // ----------------------------------------------------------------------------------------------------------
@@ -66,8 +66,8 @@ function Game() {
       ...prev,
     ]);
 
-    // increment the round, the round is use for canSpecialAttack
-    setRound((prev) => prev + 1);
+    // increment the round, since the special attack can be used after 3 game rounds so if the player didn't use the special attack it should be reset too
+    setRound((prev) => (prev === 3 ? 1 : prev + 1));
 
     // Check for winner
     checkWinner(newPlayer, newMonster);
@@ -90,7 +90,8 @@ function Game() {
       ...prev,
     ]);
 
-    setRound((prev) => prev + 1);
+    setRound((prev) => (prev === 3 ? 1 : prev + 1));
+    setRound(0);
 
     checkWinner(newPlayer, newMonster);
   }
@@ -110,7 +111,7 @@ function Game() {
       ...prev,
     ]);
 
-    setRound((prev) => prev + 1);
+    setRound((prev) => (prev === 3 ? 1 : prev + 1));
     checkWinner(newPlayer, monsterHealth);
   }
 
